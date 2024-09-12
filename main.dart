@@ -1,10 +1,14 @@
 import 'dart:io';
 
-import 'verification.dart';
-import 'user_profile.dart';
-import 'messages.dart';
+import '../old_stuff/messages.dart';
+import '../old_stuff/user_profile.dart';
+import '../old_stuff/verification.dart';
+import 'data/database_repository.dart';
+import 'data/mock_database.dart';
+import 'models/message.dart';
 
 void main() {
+  DatabaseRepository repository = MockDatabase();
   while (true) {
     print("Eingabe Handy Rufnummer:");
 
@@ -37,7 +41,7 @@ void main() {
 
 void anmeldung() {
   print("Willkommen bei GlobeTransMessage");
-
+  DatabaseRepository repository = MockDatabase();
   while (true) {
     print("Bitte wählen Sie eine Option:");
     print("");
@@ -51,20 +55,26 @@ void anmeldung() {
 
     switch (option) {
       case 1:
-        benutzerProfilAnzeigen();
-        break;
+        user_profile();
+
       case 2:
-        nachrichtenLesen();
-        break;
+        List<Message> messages = repository.getAllMessages();
+        for (Message message in messages) {
+          print("New Message: ${message.content}, am ${message.timestamp}");
+        }
+
       case 3:
-        nachrichtenSenden();
-        break;
+        // String empfaenger = stdin.readLineSync()!;
+        print("Bitte gib eine Nachricht ein:");
+        String nachricht = stdin.readLineSync()!;
+        repository.sendMessage(nachricht, "${DateTime.now()}");
+
       case 4:
-        nachrichtenUebersetzen();
-        break;
+        translateMessage();
+
       case 5:
         abmelden();
-        break;
+
       default:
         print("Ungültige Option. Bitte wählen Sie eine gültige Option.");
     }
