@@ -3,14 +3,26 @@ import '../models/message.dart';
 
 abstract class DatabaseRepository {
   // Message
-  void sendMessage(String content, String timestamp);
+
+  // Sende Nachrichten
+  void sendMessage(Message message);
+
+  // Löschen einer Nachricht
   void deleteMessage(Message message);
-  void updateMessage(Message message, String newContent, String newTimestamp);
+
+  // Update einer Nachricht
+  void updateMessage(Message message, String newContent, String newTimeStamp);
+
+  // Übersicht aller Nachrichten
   List<Message> getAllMessages();
 
   // Hier kommt das ganze für Chat hin
 
-  void newChat(List<Message> messages);
-  void createChat(String message, String receiver);
+  void newGroupChat(List<Message> messages);
+
+  // Neue chat erstellen
+  void createChat(Message message, String receiver);
+
+  // Übersicht aller chats
   List<Chat> getAllChats();
 }

@@ -12,8 +12,7 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  void sendMessage(String content, String timestamp) {
-    Message message = Message(content, timestamp);
+  void sendMessage(Message message) {
     messages.add(message);
   }
 
@@ -34,10 +33,10 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  void newChat(List<Message> messages) {}
+  void newGroupChat(List<Message> messages) {}
 
   @override
-  void createChat(String message, String receiver) {}
+  void createChat(Message message, String receiver) {}
 
   @override
   List<Chat> getAllChats() {
